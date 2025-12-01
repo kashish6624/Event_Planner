@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Planner AI</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f5f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 12px;
+            display: block;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 6px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background: #4e73df;
+            color: white;
+            padding: 14px;
+            width: 100%;
+            border: none;
+            border-radius: 8px;
+            margin-top: 18px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #3e5ec8;
+        }
+
+        #loader {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            color: #444;
+        }
+
+        #outputBox {
+            margin-top: 25px;
+            background: #ffffff;
+            padding: 20px;
+            border-left: 5px solid #4e73df;
+            border-radius: 8px;
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="container">
+    <h2>🎉 Event Planner AI</h2>
+
+    <label>Event Purpose</label>
+    <input id="purpose" type="text" placeholder="e.g. Wedding, College Fest, Birthday">
+
+    <label>Year</label>
+    <input id="year" type="number">
+
+    <label>Location</label>
+    <input id="location" type="text" placeholder="City or Venue">
+
+    <label>Budget (optional)</label>
+    <input id="budget" type="text" placeholder="e.g. ₹50,000">
+
+    <label>Total Guests</label>
+    <input id="guests" type="number" placeholder="e.g. 100">
+
+    <label>Special Requirements</label>
+    <textarea id="special" placeholder="Decor theme, food preferences, DJ, etc."></textarea>
+
+    <button onclick="submitForm()">Generate Event Plan</button>
+
+    <div id="loader">⏳ AI is Planning Your Event…</div>
+
+    <div id="outputBox" style="display:none;"></div>
+
+</div>
+
+<script>
+    function submitForm() {
+        const data = {
+            purpose: document.getElementById("purpose").value,
+            year: document.getElementById("year").value,
+            location: document.getElementById("location").value,
+            budget: document.getElementById("budget").value,
+            guests: document.getElementById("guests").value,
+            special: document.getElementById("special").value
+        };
+
+        document.getElementById("loader").style.display = "block";
+        document.getElementById("outputBox").style.display = "none";
+
+        fetch("/plan-event", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(data)
+        })
+        .then(res => res.json())
+        .then(result => {
+            document.getElementById("loader").style.display = "none";
+            document.getElementById("outputBox").style.display = "block";
+
+            // Format CrewAI output with spacing
+            document.getElementById("outputBox").innerText = result.plan;
+        });
+    }
+</script>
+
+</body>
+</html>

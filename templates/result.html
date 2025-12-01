@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Plan Result</title>
+    <style>
+        body { 
+            font-family: Arial; 
+            background: #f2f5f9; 
+            margin: 0; 
+            padding: 0;
+        }
+
+        .container { 
+            max-width: 900px; 
+            margin: 40px auto; 
+            padding: 0 20px;
+        }
+
+        h2 {
+            text-align: center; 
+            color: #333;
+        }
+
+        .card-container { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+            margin-top: 20px;
+        }
+
+        .card { 
+            background: white; 
+            padding: 20px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08); 
+            border-left: 6px solid #4e73df;
+        }
+
+        .card h3 { 
+            margin-top: 0; 
+            color: #4e73df; 
+        }
+
+        .card p { 
+            margin: 5px 0; 
+            white-space: pre-line; 
+        }
+
+        .download { 
+            display: block; 
+            margin: 20px auto; 
+            width: 200px; 
+            text-align: center; 
+            background: #1cc88a; 
+            color: white; 
+            padding: 10px; 
+            border-radius: 8px; 
+            text-decoration: none;
+        }
+
+        .download:hover { 
+            background: #17a673;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2> Event Plan – {{ topic }} ({{ year }})</h2>
+
+        <div class="card-container">
+            {% for section in sections %}
+            <div class="card">
+                <h3>{{ section.title }}</h3>
+                <p>{{ section.content }}</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <a href="{{ download_link }}" class="download"> Download Plan</a>
+    </div>
+</body>
+</html>

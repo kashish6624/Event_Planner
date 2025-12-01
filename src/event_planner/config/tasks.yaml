@@ -1,0 +1,75 @@
+research_task:
+  description: >
+    Conduct detailed research for an event about {topic} in {current_year}.
+    Identify ideal venues, reliable vendors, local service providers, entertainment options,
+    and current industry trends relevant to the event theme.
+  expected_output: >
+    A comprehensive research summary containing:
+    - At least 5 suitable venues with short descriptions
+    - At least 5 recommended vendors or service providers
+    - A trends section explaining current popular ideas related to {topic}
+  agent: event_researcher
+
+
+design_task:
+  description: >
+    Based on the research findings, create a compelling event theme and visual experience.
+    This includes color palette, stage concept, decor ideas, ambience style,
+    and recommendations for visual identity elements.
+  expected_output: >
+    A structured design plan that includes:
+    - Proposed event theme and style
+    - Color palette
+    - Stage concept and layout ideas
+    - Decor suggestions with justification
+  agent: creative_designer
+  depends_on: [research_task]
+
+
+coordination_task:
+  description: >
+    Using the research and design concepts, create a complete operational plan.
+    Organize the event schedule, logistics flow, vendor coordination plan,
+    guest movement flow, setup timeline, and contingency strategies.
+  expected_output: >
+    A detailed coordination blueprint including:
+    - Full event agenda from start to end
+    - Logistics and movement flow
+    - Vendor management plan
+    - Required resources list
+    - Risk and contingency strategies
+  agent: event_coordinator
+  depends_on: [design_task]
+
+
+budget_task:
+  description: >
+    Prepare a complete budget plan based on the event design and coordination requirements.
+    Provide price estimates for venues, catering, decor, entertainment, staffing,
+    logistics, and miscellaneous items, ensuring budget feasibility.
+  expected_output: >
+    A detailed cost breakdown including:
+    - Cost estimates for each major category
+    - Total projected budget
+    - Cost-saving recommendations
+    - Optional premium upgrades
+  agent: budget_planner
+  depends_on: [coordination_task]
+
+
+reporting_task:
+  description: >
+    Combine research, design, coordination, and budget details into a polished,
+    client-ready proposal document titled "Event Plan for {topic} {current_year}".
+    Format the document in clean markdown with headers, tables, and bullet points.
+  expected_output: >
+    A structured markdown event proposal including:
+    - Executive summary
+    - Research findings (venues & vendors)
+    - Theme & design concepts
+    - Event schedule & logistics
+    - Detailed budget table
+    - Final recommendations
+  agent: event_reporter
+  depends_on: [budget_task]
+  output_file: event_plan.md
